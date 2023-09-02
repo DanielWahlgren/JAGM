@@ -17,9 +17,10 @@ function New-JGraphBatchObject {
 		None.
 
 	.OUTPUTS
-		None.
+		[System.Collections.Hashtable].
 	#>
 	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions','')]
+	[OutputType('System.Collections.Hashtable')]
 	[CmdletBinding()]
 	param
 	(
@@ -50,12 +51,12 @@ function New-JGraphBatchObject {
 		if($AdvancedQuery -and $Url -notlike '*$count*'){
 			$Url + '&$count'
 		}
-		$object = [pscustomobject]@{
+		$object = @{
 			method = $Method
 			url    = $Url
 		}
 		if( -not [String]::IsNullOrEmpty($Body)){
-			$object.add('body',$body)
+			$object.add('body',$Body)
 			$headers.Add('Content-Type','application/json')
 		}
 		if( -not [String]::IsNullOrEmpty($headers)){

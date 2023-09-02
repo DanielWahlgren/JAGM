@@ -46,7 +46,7 @@ function Invoke-JGraphBatchRequest {
 			$parameters = @{
 				Method	= "POST"
 				Uri 	= 'v1.0/$batch'
-				Body	= $allBatchRequests | ConvertTo-Json
+				Body	= $allBatchRequests | ConvertTo-Json -Depth 10 -Compress
 				Headers = $headers
 			}
 			Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"

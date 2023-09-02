@@ -69,7 +69,7 @@ Copyright = '(c) DanielWahlgren. All rights reserved.'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Connect-JGraph', 'Disconnect-JGraph', 'Get-JGUser', 
+FunctionsToExport = 'Add-JGUser', 'Connect-JGraph', 'Disconnect-JGraph', 'Get-JGUser', 
                'Invoke-JGraphBatchRequest', 'New-JGraphBatchObject', 'Test-JGUser'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

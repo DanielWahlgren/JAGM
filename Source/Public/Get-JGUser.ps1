@@ -15,7 +15,7 @@ function Get-JGUser {
 		[Object] - If the property ObjectId, UserID or Id exists, it will be attemted to be used as ObjectId.
 
 	.OUTPUTS
-		None.
+		[PSCustomObject[]] - One or many objects with user-information from Microsoft Graph.
 	#>
 	[CmdletBinding()]
 	param
