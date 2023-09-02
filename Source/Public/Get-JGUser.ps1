@@ -23,7 +23,7 @@ function Get-JGUser {
 		[Parameter(Mandatory = $false, HelpMessage = 'Enter the desired ObjectId', ValueFromPipeline = $true,ValueFromPipelineByPropertyName = $true)]
 		# The ObjectId of the user to get from Graph.
 		[ValidateNotNullorEmpty()]
-		[Alias("UserId","Id")]
+		[Alias("UserId","Id","userPrincipalName")]
 		$ObjectId,
 
 		[Parameter(Mandatory = $false, HelpMessage = 'Enter the desired properties')]
@@ -94,6 +94,8 @@ function Get-JGUser {
 				} elseif ( -not [String]::IsNullOrEmpty($item.UserId)) {
 					$user += $item.UserId
 				} elseif ( -not [String]::IsNullOrEmpty($item.Id)) {
+					$user += $item.Id
+				} elseif ( -not [String]::IsNullOrEmpty($item.userPrincipalName)) {
 					$user += $item.Id
 				}
 			}

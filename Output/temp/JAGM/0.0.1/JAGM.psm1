@@ -1,82 +1,4 @@
 ### --- PUBLIC FUNCTIONS --- ###
-#Region - Add-JGUser.ps1
-function Add-JGUser {
-	<#
-	.SYNOPSIS
-		Helper-function to create a user in Microsoft Graph.
-
-	.DESCRIPTION
-		Helper-function to create a user in Microsoft Graph.
-
-	.EXAMPLE
-		PS> Add-JGUser $userObject
-		Creates a user
-
-	.INPUTS
-		None. You cannot pipe objects to Disconnect-JGraph.
-
-	.OUTPUTS
-		None.
-	#>
-	[CmdletBinding()]
-	param
-	(
-		[Parameter(Mandatory = $true, Position = 0, HelpMessage = 'Object to create in Microsoft Graph', ValueFromPipeline = $true)]
-		# The Object to create in Microsoft Graph
-		[ValidateScript({
-			$PSItem.GetType().Name -match 'Object' -and
-			$PSItem.PSObject.Properties.Name -contains ('accountEnabled') -and
-			$PSItem.PSObject.Properties.Name -contains ('displayName') -and
-			$PSItem.PSObject.Properties.Name -contains ('passwordProfile') -and
-			$PSItem.PSObject.Properties.Name -contains ('userPrincipalName')
-		},
-		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'accountEnabled','displayName','passwordProfile','userPrincipalName'"
-        )]
-		[Alias("UserObject")]
-		$Object
-	)
-
-	begin {
-		$headers = [System.Collections.Generic.Dictionary[string, string]]::new()
-		$headers.Add('Content-Type','application/json')
-	}
-
-	process {
-		if($Object.Count -gt 1){
-			$BatchObjects = foreach ($request in $Object) {
-				New-JGraphBatchObject -Method POST -Url '/users' -Body $request
-			}
-			Invoke-JGraphBatchRequest -BatchObjects $BatchObjects
-		} else {
-			$parameters = @{
-				Method	= "POST"
-				Uri 	= '/v1.0/users'
-				Headers = $headers
-				Body	= $Object | ConvertTo-Json
-			}
-			try{
-				Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
-				$result = Invoke-MgGraphRequest @parameters
-				#Invoke-MgGraphRequest -Method POST -Uri '/v1.0/users' -Headers $headers -Body $Object
-				if($result.ContainsKey('value')){
-					foreach($item in $result.value){
-						[PSCustomObject]$item
-					}
-				} else {
-					$result | Select-Object -ExcludeProperty '@odata.context'
-				}
-			}
-			catch {
-				$Err = $Error[0]
-				Write-Warning $Err.Exception.Message
-			}
-		}
-	}
-
-	end {}
-}
-Export-ModuleMember -Function Add-JGUser
-#EndRegion - Add-JGUser.ps1
 #Region - Connect-JGraph.ps1
 function Connect-JGraph {
 	<#
@@ -209,7 +131,7 @@ function Get-JGUser {
 		[Parameter(Mandatory = $false, HelpMessage = 'Enter the desired ObjectId', ValueFromPipeline = $true,ValueFromPipelineByPropertyName = $true)]
 		# The ObjectId of the user to get from Graph.
 		[ValidateNotNullorEmpty()]
-		[Alias("UserId","Id")]
+		[Alias("UserId","Id","userPrincipalName")]
 		$ObjectId,
 
 		[Parameter(Mandatory = $false, HelpMessage = 'Enter the desired properties')]
@@ -280,6 +202,8 @@ function Get-JGUser {
 				} elseif ( -not [String]::IsNullOrEmpty($item.UserId)) {
 					$user += $item.UserId
 				} elseif ( -not [String]::IsNullOrEmpty($item.Id)) {
+					$user += $item.Id
+				} elseif ( -not [String]::IsNullOrEmpty($item.userPrincipalName)) {
 					$user += $item.Id
 				}
 			}
@@ -389,7 +313,7 @@ function Invoke-JGraphBatchRequest {
 			Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
 			$result = Invoke-MgGraphRequest @parameters
 			$batchResult += foreach($item in $result.responses){
-				if($item.body.ContainsKey('value')){
+				if( -not [String]::IsNullOrEmpty($item.body) -and $item.body.ContainsKey('value')){
 					foreach($o in $item.body.value){
 						[PSCustomObject]$o
 					}
@@ -477,6 +401,168 @@ function New-JGraphBatchObject {
 }
 Export-ModuleMember -Function New-JGraphBatchObject
 #EndRegion - New-JGraphBatchObject.ps1
+#Region - New-JGUser.ps1
+function New-JGUser {
+	<#
+	.SYNOPSIS
+		Helper-function to create a user in Microsoft Graph.
+
+	.DESCRIPTION
+		Helper-function to create a user in Microsoft Graph.
+
+	.EXAMPLE
+		PS> New-JGUser $userObject
+		Creates a user
+
+	.INPUTS
+		[Object[]].
+
+	.OUTPUTS
+		[System.Collections.Hashtable].
+	#>
+    [alias("Add-JGuser")]
+	[CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
+	param
+	(
+		[Parameter(Mandatory = $true, Position = 0, HelpMessage = 'Object to create in Microsoft Graph', ValueFromPipeline = $true)]
+		# The Object to create in Microsoft Graph
+		[ValidateScript({
+			$PSItem.GetType().Name -match 'Object' -and
+			$PSItem.PSObject.Properties.Name -contains ('accountEnabled') -and
+			$PSItem.PSObject.Properties.Name -contains ('displayName') -and
+			$PSItem.PSObject.Properties.Name -contains ('passwordProfile') -and
+			$PSItem.PSObject.Properties.Name -contains ('userPrincipalName')
+		},
+		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'accountEnabled','displayName','passwordProfile','userPrincipalName'"
+        )]
+		[Alias("UserObject")]
+		$Object
+	)
+
+	begin {
+		$headers = [System.Collections.Generic.Dictionary[string, string]]::new()
+		$headers.Add('Content-Type','application/json')
+	}
+
+	process {
+		if($Object.Count -gt 1){
+			$BatchObjects = foreach ($request in $Object) {
+				New-JGraphBatchObject -Method POST -Url '/users' -Body $request
+			}
+			if($PSCmdlet.ShouldProcess($BatchObjects)){
+				Invoke-JGraphBatchRequest -BatchObjects $BatchObjects
+			}
+		} else {
+			$parameters = @{
+				Method	= "POST"
+				Uri 	= '/v1.0/users'
+				Headers = $headers
+				Body	= $Object | ConvertTo-Json
+			}
+			try{
+				Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
+				if($PSCmdlet.ShouldProcess($Object)){
+					$result = Invoke-MgGraphRequest @parameters
+				}
+				#Invoke-MgGraphRequest -Method POST -Uri '/v1.0/users' -Headers $headers -Body $Object
+				if($result.ContainsKey('value')){
+					foreach($item in $result.value){
+						[PSCustomObject]$item
+					}
+				} else {
+					$result | Select-Object -ExcludeProperty '@odata.context'
+				}
+			}
+			catch {
+				$Err = $Error[0]
+				Write-Warning $Err.Exception.Message
+			}
+		}
+	}
+
+	end {}
+}
+Export-ModuleMember -Function New-JGUser
+#EndRegion - New-JGUser.ps1
+#Region - Remove-JGUser.ps1
+function Remove-JGUser {
+	<#
+	.SYNOPSIS
+		Helper-function to remove a user from Microsoft Graph.
+
+	.DESCRIPTION
+		Helper-function to remove a user from Microsoft Graph.
+
+	.EXAMPLE
+		PS> Remove-JGUser $ObjectId
+		Remove a user from Microsoft Graph.
+
+	.INPUTS
+		None.
+
+	.OUTPUTS
+		None.
+	#>
+	[CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
+	param
+	(
+		[Parameter(Mandatory = $true, HelpMessage = 'Enter the user to remove', ValueFromPipeline = $true,ValueFromPipelineByPropertyName = $true)]
+		# The ObjectId of the user to get from Graph.
+		[ValidateNotNullorEmpty()]
+		[Alias("UserId","Id","userPrincipalName")]
+		$ObjectId
+	)
+
+	begin {}
+
+	process {
+		# Handle if the incoming values are a strings or objects.
+		$user = @()
+		foreach($item in $ObjectId){
+			if($item.GetType().Name -eq 'String'){
+				$user += $item
+			} elseif($item.GetType().Name -match 'Object'){
+				if( -not [String]::IsNullOrEmpty($item.ObjectId)){
+					$user += $item.ObjectId
+				} elseif ( -not [String]::IsNullOrEmpty($item.UserId)) {
+					$user += $item.UserId
+				} elseif ( -not [String]::IsNullOrEmpty($item.Id)) {
+					$user += $item.Id
+				} elseif ( -not [String]::IsNullOrEmpty($item.userPrincipalName)) {
+					$user += $item.userPrincipalName
+				}
+			}
+		}
+		if($user.Count -gt 1){
+			$BatchObjects = foreach ($request in $user) {
+				New-JGraphBatchObject -Method DELETE -Url ('/users/' + $request)
+			}
+			if($PSCmdlet.ShouldProcess($BatchObjects)){
+				Invoke-JGraphBatchRequest -BatchObjects $BatchObjects
+			}
+		} elseif ($user.count -eq 1) {
+			$parameters = @{
+				Method	= "DELETE"
+				Uri 	= '/v1.0/users/' + $user
+				Headers = $headers
+			}
+			try{
+				Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
+				if($PSCmdlet.ShouldProcess($user)){
+					Invoke-MgGraphRequest @parameters
+				}
+			}
+			catch {
+				$Err = $Error[0]
+				Write-Warning $Err.Exception.Message
+			}
+		}
+	}
+
+	end {}
+}
+Export-ModuleMember -Function Remove-JGUser
+#EndRegion - Remove-JGUser.ps1
 #Region - Test-JGUser.ps1
 function Test-JGUser {
 	<#
@@ -566,4 +652,7 @@ function Test-JGUser {
 }
 Export-ModuleMember -Function Test-JGUser
 #EndRegion - Test-JGUser.ps1
+#Region - Update-JGUser.ps1
+Export-ModuleMember -Function Update-JGUser
+#EndRegion - Update-JGUser.ps1
 ### --- PRIVATE FUNCTIONS --- ###

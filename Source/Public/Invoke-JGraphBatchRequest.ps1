@@ -52,7 +52,7 @@ function Invoke-JGraphBatchRequest {
 			Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
 			$result = Invoke-MgGraphRequest @parameters
 			$batchResult += foreach($item in $result.responses){
-				if($item.body.ContainsKey('value')){
+				if( -not [String]::IsNullOrEmpty($item.body) -and $item.body.ContainsKey('value')){
 					foreach($o in $item.body.value){
 						[PSCustomObject]$o
 					}

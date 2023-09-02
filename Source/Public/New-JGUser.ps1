@@ -1,4 +1,4 @@
-function Add-JGUser {
+function New-JGUser {
 	<#
 	.SYNOPSIS
 		Helper-function to create a user in Microsoft Graph.
@@ -7,16 +7,17 @@ function Add-JGUser {
 		Helper-function to create a user in Microsoft Graph.
 
 	.EXAMPLE
-		PS> Add-JGUser $userObject
+		PS> New-JGUser $userObject
 		Creates a user
 
 	.INPUTS
-		None. You cannot pipe objects to Disconnect-JGraph.
+		[Object[]].
 
 	.OUTPUTS
-		None.
+		[System.Collections.Hashtable].
 	#>
-	[CmdletBinding()]
+    [alias("Add-JGuser")]
+	[CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
 	param
 	(
 		[Parameter(Mandatory = $true, Position = 0, HelpMessage = 'Object to create in Microsoft Graph', ValueFromPipeline = $true)]
@@ -44,7 +45,9 @@ function Add-JGUser {
 			$BatchObjects = foreach ($request in $Object) {
 				New-JGraphBatchObject -Method POST -Url '/users' -Body $request
 			}
-			Invoke-JGraphBatchRequest -BatchObjects $BatchObjects
+			if($PSCmdlet.ShouldProcess($BatchObjects)){
+				Invoke-JGraphBatchRequest -BatchObjects $BatchObjects
+			}
 		} else {
 			$parameters = @{
 				Method	= "POST"
@@ -54,7 +57,9 @@ function Add-JGUser {
 			}
 			try{
 				Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
-				$result = Invoke-MgGraphRequest @parameters
+				if($PSCmdlet.ShouldProcess($Object)){
+					$result = Invoke-MgGraphRequest @parameters
+				}
 				#Invoke-MgGraphRequest -Method POST -Uri '/v1.0/users' -Headers $headers -Body $Object
 				if($result.ContainsKey('value')){
 					foreach($item in $result.value){
