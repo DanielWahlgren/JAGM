@@ -9,10 +9,10 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-# RootModule = ''
+RootModule = 'JAGM.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.1'
+ModuleVersion = '0.9.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -24,7 +24,7 @@ GUID = '72c69943-450e-4a49-be45-635edbbabc77'
 Author = 'DanielWahlgren'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'Wakri'
 
 # Copyright statement for this module
 Copyright = '(c) DanielWahlgren. All rights reserved.'
