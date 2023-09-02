@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN" "report.dtd"[]>
-<report name="Pester (09/03/2023 00:28:58)">
-  <sessioninfo id="this" start="1693700938195" dump="1693700938198" />
+<report name="Pester (09/03/2023 00:32:48)">
+  <sessioninfo id="this" start="1693701168157" dump="1693701168160" />
   <package name="Public">
     <class name="Public/Connect-JGraph" sourcefilename="Connect-JGraph.ps1">
-      <method name="Connect-JGraph" desc="()" line="45">
+      <method name="Connect-JGraph" desc="()" line="41">
         <counter type="INSTRUCTION" missed="13" covered="0" />
         <counter type="LINE" missed="12" covered="0" />
         <counter type="METHOD" missed="1" covered="0" />
@@ -92,18 +92,18 @@
       <counter type="CLASS" missed="1" covered="0" />
     </class>
     <sourcefile name="Connect-JGraph.ps1">
+      <line nr="41" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="42" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="43" mi="1" ci="0" mb="0" cb="0" />
       <line nr="45" mi="1" ci="0" mb="0" cb="0" />
       <line nr="46" mi="1" ci="0" mb="0" cb="0" />
       <line nr="47" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="49" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="50" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="51" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="48" mi="1" ci="0" mb="0" cb="0" />
       <line nr="52" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="56" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="57" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="58" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="59" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="66" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="53" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="54" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="55" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="62" mi="2" ci="0" mb="0" cb="0" />
       <counter type="INSTRUCTION" missed="13" covered="0" />
       <counter type="LINE" missed="12" covered="0" />
       <counter type="METHOD" missed="1" covered="0" />

@@ -14,10 +14,6 @@ function Connect-JGraph {
 		PS> Connect-JGraph -TenantName:'contoso.onmicrosoft.com'
 		Connect to the Contoso-tenant using the configuration found in the loaded profile.
 
-	.EXAMPLE
-		PS> Connect-EvtGraph -TenantName:'contoso.onmicrosoft.com' -AppContext:'MEM'
-		Connect to the Contoso-tenant using the ClientId and CertificateName for MEM (Microsoft Endpoint Manager - Eventful Modern Workspace)
-
 	.INPUTS
 		None. You cannot pipe objects to Connect-EvtGraph.
 
