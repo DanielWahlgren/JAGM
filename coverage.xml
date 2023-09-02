@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN" "report.dtd"[]>
-<report name="Pester (09/03/2023 00:32:48)">
-  <sessioninfo id="this" start="1693701168157" dump="1693701168160" />
+<report name="Pester (09/03/2023 01:34:48)">
+  <sessioninfo id="this" start="1693704888499" dump="1693704888504" />
   <package name="Public">
     <class name="Public/Connect-JGraph" sourcefilename="Connect-JGraph.ps1">
       <method name="Connect-JGraph" desc="()" line="41">
@@ -88,6 +88,17 @@
       </method>
       <counter type="INSTRUCTION" missed="30" covered="0" />
       <counter type="LINE" missed="27" covered="0" />
+      <counter type="METHOD" missed="1" covered="0" />
+      <counter type="CLASS" missed="1" covered="0" />
+    </class>
+    <class name="Public/Update-JGUser" sourcefilename="Update-JGUser.ps1">
+      <method name="Update-JGUser" desc="()" line="25">
+        <counter type="INSTRUCTION" missed="26" covered="0" />
+        <counter type="LINE" missed="22" covered="0" />
+        <counter type="METHOD" missed="1" covered="0" />
+      </method>
+      <counter type="INSTRUCTION" missed="26" covered="0" />
+      <counter type="LINE" missed="22" covered="0" />
       <counter type="METHOD" missed="1" covered="0" />
       <counter type="CLASS" missed="1" covered="0" />
     </class>
@@ -328,13 +339,41 @@
       <counter type="METHOD" missed="1" covered="0" />
       <counter type="CLASS" missed="1" covered="0" />
     </sourcefile>
-    <counter type="INSTRUCTION" missed="214" covered="0" />
-    <counter type="LINE" missed="189" covered="0" />
-    <counter type="METHOD" missed="8" covered="0" />
-    <counter type="CLASS" missed="8" covered="0" />
+    <sourcefile name="Update-JGUser.ps1">
+      <line nr="25" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="26" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="38" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="39" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="40" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="42" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="43" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="45" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="46" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="47" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="48" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="49" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="50" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="53" mi="3" ci="0" mb="0" cb="0" />
+      <line nr="54" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="55" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="57" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="58" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="59" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="62" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="66" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="67" mi="1" ci="0" mb="0" cb="0" />
+      <counter type="INSTRUCTION" missed="26" covered="0" />
+      <counter type="LINE" missed="22" covered="0" />
+      <counter type="METHOD" missed="1" covered="0" />
+      <counter type="CLASS" missed="1" covered="0" />
+    </sourcefile>
+    <counter type="INSTRUCTION" missed="240" covered="0" />
+    <counter type="LINE" missed="211" covered="0" />
+    <counter type="METHOD" missed="9" covered="0" />
+    <counter type="CLASS" missed="9" covered="0" />
   </package>
-  <counter type="INSTRUCTION" missed="214" covered="0" />
-  <counter type="LINE" missed="189" covered="0" />
-  <counter type="METHOD" missed="8" covered="0" />
-  <counter type="CLASS" missed="8" covered="0" />
+  <counter type="INSTRUCTION" missed="240" covered="0" />
+  <counter type="LINE" missed="211" covered="0" />
+  <counter type="METHOD" missed="9" covered="0" />
+  <counter type="CLASS" missed="9" covered="0" />
 </report>
