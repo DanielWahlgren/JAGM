@@ -1,57 +1,61 @@
 # JAGM
 ## about_JAGM
-
-```
-ABOUT TOPIC NOTE:
-The first header of the about topic should be the topic name.
-The second header contains the lookup name used by the help system.
-
-IE:
-# Some Help Topic Name
-## SomeHelpTopicFileName
-
-This will be transformed into the text file
-as `about_SomeHelpTopicFileName`.
-Do not include file extensions.
-The second header should have no spaces.
-```
+JAGM stands for Just Another Graph Module.
 
 # SHORT DESCRIPTION
-{{ Short Description Placeholder }}
-
-```
-ABOUT TOPIC NOTE:
-About topics can be no longer than 80 characters wide when rendered to text.
-Any topics greater than 80 characters will be automatically wrapped.
-The generated about topic will be encoded UTF-8.
-```
+JAGM is meant to be a module for graph made the way a PowerShell Moduleshould be made.
+Essensially Hybris on my part.
 
 # LONG DESCRIPTION
-{{ Long Description Placeholder }}
+I've made this module with the vision that it is made "the way a PowerShell Module should be made".
+While I am absolutely convinced I'm not a good enough developer to reach that vision, the least reason of which is that I am implementing it in PowerShell and not C#, I also believe that there is a fundamental error in how Microsoft creates it's Graph SDK for PowerShell.
+The commands are hard to get to know, unless you are very familiar with the Graph API itself. I believe a company of Microsofts size should have a team avaliable to create and maintain a PowerShell module that is usable by the masses of IT-professionals out there, and not just specialists.
+I am not a team, and I am not funded to take on the undertaking of writing a module for the entirety of Microsoft Graph. But I hope that I can get far enough along that I dare release this publicly, and inspire others to join me in creating this module.
 
-## Optional Subtopics
-{{ Optional Subtopic Placeholder }}
+## Features
+I hope to build this module focusing on these features:
+* Properly implement basic CMDLet funcionality
+	* SupportsShouldProcess
+	* Verbose
+	* Error handling
+* Microsoft Graph Batching
+* Support for using the pipeline
 
 # EXAMPLES
-{{ Code or descriptive examples of how to leverage the functions described. }}
+```
+# Set a configuration for JAGM. This can be placed in $PROFILE to have it loaded the same each time.
+$JAGMconfig = @{
+	CertificateSubjectName = 'CN=JGraph'
+	ClientId = '00000000-0000-0000-0000-000000000000'
+	ContextScope = "Process"
+}
+
+# Connect to Microsoft Graph and set all users companyName to 'Contoso' using Batching.
+Connect-JGraph -TenantName:'contoso.onmicrosoft.com'
+$users = Get-JGUser -Property 'Id,companyName'
+foreach($user in $users){
+	$user.companyName = 'Contoso'
+}
+Update-JGUser $users
+Disconnect-JGraph
+```
+
 
 # NOTE
-{{ Note Placeholder - Additional information that a user needs to know.}}
+Please note that there are large performance issues depending on how you decide to utilize a command.
+```
+$users = '<guid>','<guid>','<guid>','<guid>','<guid>','<guid>','<guid>','<guid>','<guid>','<guid>','<guid>'
+Get-JGUser $users      # Batching
+$users | Get-JGUser    # Pipeline stream
+```
+Batching will divide all the users into groups of 20 and make a batching call to Microsoft Graph. This will significantly reduce latency, aswell as lower the risk of getting throttled by the API.
+Pipeline stream is sutable for scenarios where you want each user to continue down the pipeline for continued processing in a stream.
 
 # TROUBLESHOOTING NOTE
-{{ Troubleshooting Placeholder - Warns users of bugs}}
-
-{{ Explains behavior that is likely to change with fixes }}
+N/A
 
 # SEE ALSO
-{{ See also placeholder }}
-
-{{ You can also list related articles, blogs, and video URLs. }}
+[Microsoft Graph Referense (Beta)](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-beta)
 
 # KEYWORDS
-{{List alternate names or titles for this topic that readers might use.}}
-
-- {{ Keyword Placeholder }}
-- {{ Keyword Placeholder }}
-- {{ Keyword Placeholder }}
-- {{ Keyword Placeholder }}
+N/A

@@ -37,21 +37,21 @@ function Update-JGUser {
 	process {
 		if($Object.Count -gt 1){
 			$BatchObjects = foreach ($request in $Object) {
-				New-JGraphBatchObject -Method GET -Url ('/users/' + $request.Id) -Body $request
+				New-JGraphBatchObject -Method PATCH -Url ('/users/' + $request.Id) -Body $request
 			}
 			if($PSCmdlet.ShouldProcess($BatchObjects)){
 				Invoke-JGraphBatchRequest -BatchObjects $BatchObjects
 			}
 		} elseif ($user.count -eq 1) {
 			$parameters = @{
-				Method	= "GET"
+				Method	= "PATCH"
 				Uri 	= '/v1.0/users/' + $Object.Id
 				Body    = $Object
 				Headers = $headers
 			}
 			try{
 				Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
-				if($PSCmdlet.ShouldProcess($Object)){
+				if($PSCmdlet.ShouldProcess($Object.Id)){
 					$result = Invoke-MgGraphRequest @parameters
 				}
 				if($result.ContainsKey('value')){
