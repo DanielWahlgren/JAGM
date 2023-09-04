@@ -25,7 +25,12 @@ function Invoke-JGraphBatchRequest {
 		[Parameter(Mandatory = $false, HelpMessage = 'Submit BatchObjects', ValueFromPipeline = $true,ValueFromPipelineByPropertyName = $true)]
 		# The batch-objects to use in the request.
 		[ValidateNotNullorEmpty()]
-		$BatchObjects
+		$BatchObjects,
+
+		[Parameter(Mandatory = $false, HelpMessage = 'Select which endpoint to use, v1.0 or beta')]
+		# The batch-endpoint to use in the request.
+		[ValidateSet('v1.0','beta')]
+		$Endpoint = 'v1.0'
 	)
 
 	process {
@@ -45,7 +50,7 @@ function Invoke-JGraphBatchRequest {
 			}
 			$parameters = @{
 				Method	= "POST"
-				Uri 	= 'v1.0/$batch'
+				Uri 	= $Endpoint + '/$batch'
 				Body	= $allBatchRequests | ConvertTo-Json -Depth 10 -Compress
 				Headers = $headers
 			}

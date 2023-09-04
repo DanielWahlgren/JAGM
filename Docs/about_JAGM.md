@@ -14,12 +14,13 @@ I am not a team, and I am not funded to take on the undertaking of writing a mod
 
 ## Features
 I hope to build this module focusing on these features:
-* Properly implement basic CMDLet funcionality
+* Properly implement basic CMDlet funcionality
 	* SupportsShouldProcess
 	* Verbose
 	* Error handling
 * Microsoft Graph Batching
 * Support for using the pipeline
+* Keep support for functionality in the correct CMDlet instead of a million mini-CMDlets. Get-JGUser -Expand manager instead of Get-MgUserManager etc.
 
 # EXAMPLES
 ```
@@ -56,6 +57,7 @@ N/A
 
 # SEE ALSO
 [Microsoft Graph Referense (Beta)](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-beta)
+[Microsoft Graph PowerShell](https://learn.microsoft.com/en-us/powershell/microsoftgraph/installation?view=graph-powershell-beta)
 
 # KEYWORDS
 N/A

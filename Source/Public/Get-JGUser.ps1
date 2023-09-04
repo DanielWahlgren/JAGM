@@ -5,6 +5,8 @@ function Get-JGUser {
 
 	.DESCRIPTION
 		Gets one or more user from Microsoft Graph. Attempts to do so with the least amount of 'cost'.
+		To assist with discovery, we attempt to add parameters for additional functionality of the API.
+		For example adding -IncludeManager instead of requireing -Expand 'manager'
 
 	.EXAMPLE
 		PS> Get-JGUser
@@ -17,47 +19,89 @@ function Get-JGUser {
 	.OUTPUTS
 		[PSCustomObject[]] - One or many objects with user-information from Microsoft Graph.
 	#>
-	[CmdletBinding()]
+	[CmdletBinding(DefaultParameterSetName='Default')]
 	param
 	(
-		[Parameter(Mandatory = $false, HelpMessage = 'Enter the desired ObjectId', ValueFromPipeline = $true,ValueFromPipelineByPropertyName = $true)]
+		[Parameter(
+			Mandatory = $true,
+			HelpMessage = 'Enter the desired ObjectId',
+			ValueFromPipeline = $true,
+			ValueFromPipelineByPropertyName = $true
+		)]
 		# The ObjectId of the user to get from Graph.
 		[ValidateNotNullorEmpty()]
 		[Alias("UserId","Id","userPrincipalName")]
 		$ObjectId,
 
-		[Parameter(Mandatory = $false, HelpMessage = 'Enter the desired properties')]
+		[Parameter(
+			Mandatory = $false,
+			HelpMessage = 'Enter the desired properties'
+		)]
 		# The properties of the user to get from Graph.
 		[String]$Property = "Id,displayName,jobTitle,mail,officeLocation,userPrincipalName",
 
-		[Parameter(Mandatory = $false, HelpMessage = 'Run as an advanced query')]
+		[Parameter(
+			Mandatory = $false,
+			HelpMessage = 'Run as an advanced query'
+		)]
 		# The properties of the user to get from Graph.
 		[Switch]$AdvancedQuery,
 
-		[Parameter(Mandatory = $false, HelpMessage = 'Retrieves related resources.')]
-		# Retrieves related resources..
-		[String]$ExpandProperty,
-
-		[Parameter(Mandatory = $false, HelpMessage = 'Filters results (rows).')]
+		[Parameter(
+			Mandatory = $false,
+			HelpMessage = 'Filters results (rows).'
+		)]
 		# Filters results (rows).
 		[String]$Filter,
 
-		[Parameter(Mandatory = $false, HelpMessage = 'Returns results based on search criteria.')]
+		[Parameter(
+			Mandatory = $false,
+			HelpMessage = 'Returns results based on search criteria.'
+		)]
 		# Returns results based on search criteria.
 		[String]$Search,
 
-		[Parameter(Mandatory = $false, HelpMessage = 'Orders results. For descending order, append ')]
+		[Parameter(
+			Mandatory = $false,
+			HelpMessage = 'Orders results. For descending order, append '
+		)]
 		# Orders results.
 		# To sort the results in ascending or descending order, append either asc or desc to the field name, separated by a space; for example, name%20desc. If the sort order is not specified, the default (ascending order) is inferred.
 		[Alias("Order","OrderBy")]
 		[String]$Sort,
 
-		[Parameter(Mandatory = $false, HelpMessage = 'Sets the page size of results.')]
+		[Parameter(
+			Mandatory = $false,
+			HelpMessage = 'Sets the page size of results.'
+		)]
 		# Sets the page size of results.
-		[int]$Top
+		[int]$Top,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'Default',
+			HelpMessage = 'Retrieves related resources.'
+		)]
+		# Retrieves related resources.
+		[String]$ExpandProperty,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'IncludeManager',
+			HelpMessage = 'Adds the users manager to the query.'
+		)]
+		# Adds the users manager to the query. Returns the Manager with -Properties properties.
+		# To better customise, instead use -Expand 'manager($Select=id,userPrincipalname)'
+		[Switch]$IncludeManager
 	)
 
 	begin {
+		if($IncludeManager){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'manager($Select=' + $properties + ')'
+		}
+
+		#Construct the basics for the query based on supplied parameters
 		$headers = @{}
 		if($AdvancedQuery){
 			$headers.Add('ConsistencyLevel','eventual')
