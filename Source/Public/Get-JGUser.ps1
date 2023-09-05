@@ -90,15 +90,28 @@ function Get-JGUser {
 			ParameterSetName = 'IncludeManager',
 			HelpMessage = 'Adds the users manager to the query.'
 		)]
-		# Adds the users manager to the query. Returns the Manager with -Properties properties.
+		# Adds the users manager to the query. Returns the Manager with -Property properties.
 		# To better customise, instead use -Expand 'manager($Select=id,userPrincipalname)'
-		[Switch]$IncludeManager
+		[Switch]$IncludeManager,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'IncludeDirectReports',
+			HelpMessage = 'Adds the users for whom the selected user is a manager to the query.'
+		)]
+		# Adds the users for whom the selected user is a manager to the query. Returns the DirectReports with -Property properties.
+		# To better customise, instead use -Expand 'directReports($Select=id,userPrincipalname)'
+		[Switch]$IncludeDirectReports
 	)
 
 	begin {
 		if($IncludeManager){
 			$PSBoundParameters['ExpandProperty'] = $true
-			$ExpandProperty = 'manager($Select=' + $properties + ')'
+			$ExpandProperty = 'manager($Select=' + $Property + ')'
+		}
+		if($IncludeDirectReports){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'directReports($Select=' + $Property + ')'
 		}
 
 		#Construct the basics for the query based on supplied parameters
