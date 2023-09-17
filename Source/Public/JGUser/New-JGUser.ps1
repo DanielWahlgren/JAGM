@@ -31,8 +31,8 @@ function New-JGUser {
 		},
 		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'accountEnabled','displayName','passwordProfile','userPrincipalName'"
         )]
-		[Alias("UserObject")]
-		$Object
+		[Alias("Object")]
+		$UserObject
 	)
 
 	begin {
@@ -41,8 +41,8 @@ function New-JGUser {
 	}
 
 	process {
-		if($Object.Count -gt 1){
-			$BatchObjects = foreach ($request in $Object) {
+		if($UserObject.Count -gt 1){
+			$BatchObjects = foreach ($request in $UserObject) {
 				New-JGraphBatchObject -Method POST -Url '/users' -Body $request
 			}
 			if($PSCmdlet.ShouldProcess($BatchObjects)){
@@ -53,11 +53,11 @@ function New-JGUser {
 				Method	= "POST"
 				Uri 	= '/v1.0/users'
 				Headers = $headers
-				Body	= $Object | ConvertTo-Json
+				Body	= $UserObject | ConvertTo-Json
 			}
 			try{
 				Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
-				if($PSCmdlet.ShouldProcess($Object)){
+				if($PSCmdlet.ShouldProcess($UserObject.displayName)){
 					$result = Invoke-MgGraphRequest @parameters
 				}
 				#Invoke-MgGraphRequest -Method POST -Uri '/v1.0/users' -Headers $headers -Body $Object
@@ -70,8 +70,12 @@ function New-JGUser {
 				}
 			}
 			catch {
-				$Err = $Error[0]
-				Write-Warning $Err.Exception.Message
+				if([String]::IsNullOrEmpty($Error[0])){
+					Write-Error "Unknown error"
+				} else {
+					$Err = $Error[0]
+					Write-Warning $Err.Exception.Message
+				}
 			}
 		}
 	}

@@ -5,5 +5,8 @@
 	"TestResult": {
 		"Enabled": true,
 		"OutputFormat": "NUnitXml"
+	},
+	"Output": {
+		"Verbosity": "Detailed"
 	}
 }

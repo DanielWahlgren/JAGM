@@ -180,13 +180,13 @@ task DebugBuild -if ($Configuration -eq "debug") {
 	}
 	Write-Verbose -Message "Building the .psm1 file"
 	Write-Verbose -Message "Appending Public Functions"
-	Add-Content -Path $PSDMTo -Value "### --- PUBLIC FUNCTIONS --- ###"
+	Add-Content -Path $PSMTo -Value "### --- PUBLIC FUNCTIONS --- ###"
 	foreach ($function in $publicFunctions) {
 		try {
 			Write-Verbose -Message "Updating the .psm1 file with function: $($function.Name)"
 			$content = Get-Content -Path $function.FullName
-			Add-Content -Path $PSDMTo -Value "#Region - $($function.Name)"
-			Add-Content -Path $PSDMTo -Value $content
+			Add-Content -Path $PSMTo -Value "#Region - $($function.Name)"
+			Add-Content -Path $PSMTo -Value $content
 			if ($ExportAlias.IsPresent) {
 				$AliasSwitch = $false
 				$Sel = Select-String -Path $function.FullName -Pattern "CmdletBinding" -Context 0, 1
@@ -195,32 +195,32 @@ task DebugBuild -if ($Configuration -eq "debug") {
 					if ($s -match "Alias") {
 						$alias = (($s.split(":")[2]).split("(")[1]).split(")")[0]
 						Write-Verbose -Message "Exporting Alias: $($alias) to Function: $($function.Name)"
-						Add-Content -Path $PSDMTo -Value "Export-ModuleMember -Function $(($function.Name.split('.')[0]).ToString()) -Alias $alias"
+						Add-Content -Path $PSMTo -Value "Export-ModuleMember -Function $(($function.Name.split('.')[0]).ToString()) -Alias $alias"
 						$AliasSwitch = $true
 					}
 				}
 				if ($AliasSwitch -eq $false) {
 					Write-Verbose -Message "No alias was found in function: $($function.Name))"
-					Add-Content -Path $PSDMTo -Value "Export-ModuleMember -Function $(($function.Name.split('.')[0]).ToString())"
+					Add-Content -Path $PSMTo -Value "Export-ModuleMember -Function $(($function.Name.split('.')[0]).ToString())"
 				}
 			} else {
-				Add-Content -Path $PSDMTo -Value "Export-ModuleMember -Function $(($function.Name.split('.')[0]).ToString())"
+				Add-Content -Path $PSMTo -Value "Export-ModuleMember -Function $(($function.Name.split('.')[0]).ToString())"
 			}
-			Add-Content -Path $PSDMTo -Value "#EndRegion - $($function.Name)"
+			Add-Content -Path $PSMTo -Value "#EndRegion - $($function.Name)"
 		} catch {
 			throw "Failed adding content to .psm1 for function: $($function.Name)"
 		}
 	}
 
 	Write-Verbose -Message "Appending Private functions"
-	Add-Content -Path $PSDMTo -Value "### --- PRIVATE FUNCTIONS --- ###"
+	Add-Content -Path $PSMTo -Value "### --- PRIVATE FUNCTIONS --- ###"
 	foreach ($function in $privateFunctions) {
 		try {
 			Write-Verbose -Message "Updating the .psm1 file with function: $($function.Name)"
 			$content = Get-Content -Path $function.FullName
-			Add-Content -Path $PSDMTo -Value "#Region - $($function.Name)"
-			Add-Content -Path $PSDMTo -Value $content
-			Add-Content -Path $PSDMTo -Value "#EndRegion - $($function.Name)"            
+			Add-Content -Path $PSMTo -Value "#Region - $($function.Name)"
+			Add-Content -Path $PSMTo -Value $content
+			Add-Content -Path $PSMTo -Value "#EndRegion - $($function.Name)"            
 		} catch {
 			throw "Failed adding content to .psm1 for function: $($function.Name)"
 		}

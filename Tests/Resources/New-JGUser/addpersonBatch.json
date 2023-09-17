@@ -1,0 +1,104 @@
+{
+  "responses": [
+    {
+      "headers": {
+        "Content-Type": "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8",
+        "Cache-Control": "no-cache",
+        "x-ms-resource-unit": "1",
+        "OData-Version": "4.0",
+        "Location": "https://graph.microsoft.com/v2/00000000-0000-0000-0000-000000000000/directoryObjects/39126db3-d1bb-4245-bd18-1fc08d453797/Microsoft.DirectoryServices.User"
+      },
+      "id": "2",
+      "body": {
+        "mobilePhone": null,
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "surname": null,
+        "mail": null,
+        "officeLocation": null,
+        "userPrincipalName": "JGUser02@contoso.com",
+        "businessPhones": [],
+        "jobTitle": null,
+        "displayName": "JGUser02",
+        "preferredLanguage": null,
+        "id": "39126db3-d1bb-4245-bd18-1fc08d453797",
+        "givenName": null
+      },
+      "status": 201
+    },
+    {
+      "headers": {
+        "Content-Type": "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8",
+        "Cache-Control": "no-cache",
+        "x-ms-resource-unit": "1",
+        "OData-Version": "4.0",
+        "Location": "https://graph.microsoft.com/v2/00000000-0000-0000-0000-000000000000/directoryObjects/37b7d18c-7051-4624-847a-569b6a4ac757/Microsoft.DirectoryServices.User"
+      },
+      "id": "4",
+      "body": {
+        "mobilePhone": null,
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "surname": null,
+        "mail": null,
+        "officeLocation": null,
+        "userPrincipalName": "JGUser04@contoso.com",
+        "businessPhones": [],
+        "jobTitle": null,
+        "displayName": "JGUser04",
+        "preferredLanguage": null,
+        "id": "37b7d18c-7051-4624-847a-569b6a4ac757",
+        "givenName": null
+      },
+      "status": 201
+    },
+    {
+      "headers": {
+        "Content-Type": "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8",
+        "Cache-Control": "no-cache",
+        "x-ms-resource-unit": "1",
+        "OData-Version": "4.0",
+        "Location": "https://graph.microsoft.com/v2/00000000-0000-0000-0000-000000000000/directoryObjects/511c60fc-5cb9-4ca4-ba81-b7ccd7e2b9d4/Microsoft.DirectoryServices.User"
+      },
+      "id": "1",
+      "body": {
+        "mobilePhone": null,
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "surname": null,
+        "mail": null,
+        "officeLocation": null,
+        "userPrincipalName": "JGUser01@contoso.com",
+        "businessPhones": [],
+        "jobTitle": null,
+        "displayName": "JGUser01",
+        "preferredLanguage": null,
+        "id": "511c60fc-5cb9-4ca4-ba81-b7ccd7e2b9d4",
+        "givenName": null
+      },
+      "status": 201
+    },
+    {
+      "headers": {
+        "Content-Type": "application/json;odata.metadata=minimal;odata.streaming=true;IEEE754Compatible=false;charset=utf-8",
+        "Cache-Control": "no-cache",
+        "x-ms-resource-unit": "1",
+        "OData-Version": "4.0",
+        "Location": "https://graph.microsoft.com/v2/00000000-0000-0000-0000-000000000000/directoryObjects/a9754b73-8abb-4b2f-9428-1391e71cad6f/Microsoft.DirectoryServices.User"
+      },
+      "id": "3",
+      "body": {
+        "mobilePhone": null,
+        "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+        "surname": null,
+        "mail": null,
+        "officeLocation": null,
+        "userPrincipalName": "JGUser03@contoso.com",
+        "businessPhones": [],
+        "jobTitle": null,
+        "displayName": "JGUser03",
+        "preferredLanguage": null,
+        "id": "a9754b73-8abb-4b2f-9428-1391e71cad6f",
+        "givenName": null
+      },
+      "status": 201
+    }
+  ]
+}

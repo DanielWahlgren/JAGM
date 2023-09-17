@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN" "report.dtd"[]>
-<report name="Pester (09/16/2023 21:42:58)">
-  <sessioninfo id="this" start="1694900578197" dump="1694900578208" />
+<report name="Pester (09/17/2023 18:28:51)">
+  <sessioninfo id="this" start="1694975322640" dump="1694975331460" />
   <package name="Public">
     <class name="Public/Connect-JGraph" sourcefilename="Connect-JGraph.ps1">
       <method name="Connect-JGraph" desc="()" line="41">
@@ -38,14 +38,14 @@
     </class>
     <class name="Public/New-JGraphBatchObject" sourcefilename="New-JGraphBatchObject.ps1">
       <method name="New-JGraphBatchObject" desc="()" line="44">
-        <counter type="INSTRUCTION" missed="14" covered="0" />
-        <counter type="LINE" missed="14" covered="0" />
-        <counter type="METHOD" missed="1" covered="0" />
+        <counter type="INSTRUCTION" missed="2" covered="12" />
+        <counter type="LINE" missed="2" covered="12" />
+        <counter type="METHOD" missed="0" covered="1" />
       </method>
-      <counter type="INSTRUCTION" missed="14" covered="0" />
-      <counter type="LINE" missed="14" covered="0" />
-      <counter type="METHOD" missed="1" covered="0" />
-      <counter type="CLASS" missed="1" covered="0" />
+      <counter type="INSTRUCTION" missed="2" covered="12" />
+      <counter type="LINE" missed="2" covered="12" />
+      <counter type="METHOD" missed="0" covered="1" />
+      <counter type="CLASS" missed="0" covered="1" />
     </class>
     <sourcefile name="Connect-JGraph.ps1">
       <line nr="41" mi="1" ci="0" mb="0" cb="0" />
@@ -104,29 +104,29 @@
       <counter type="CLASS" missed="1" covered="0" />
     </sourcefile>
     <sourcefile name="New-JGraphBatchObject.ps1">
-      <line nr="44" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="45" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="44" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="45" mi="0" ci="1" mb="0" cb="0" />
       <line nr="46" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="51" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="51" mi="0" ci="1" mb="0" cb="0" />
       <line nr="52" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="54" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="55" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="56" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="58" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="59" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="60" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="62" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="63" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="65" mi="1" ci="0" mb="0" cb="0" />
-      <counter type="INSTRUCTION" missed="14" covered="0" />
-      <counter type="LINE" missed="14" covered="0" />
-      <counter type="METHOD" missed="1" covered="0" />
-      <counter type="CLASS" missed="1" covered="0" />
+      <line nr="54" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="55" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="56" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="58" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="59" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="60" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="62" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="63" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="65" mi="0" ci="1" mb="0" cb="0" />
+      <counter type="INSTRUCTION" missed="2" covered="12" />
+      <counter type="LINE" missed="2" covered="12" />
+      <counter type="METHOD" missed="0" covered="1" />
+      <counter type="CLASS" missed="0" covered="1" />
     </sourcefile>
-    <counter type="INSTRUCTION" missed="60" covered="0" />
-    <counter type="LINE" missed="52" covered="0" />
-    <counter type="METHOD" missed="4" covered="0" />
-    <counter type="CLASS" missed="4" covered="0" />
+    <counter type="INSTRUCTION" missed="48" covered="12" />
+    <counter type="LINE" missed="40" covered="12" />
+    <counter type="METHOD" missed="3" covered="1" />
+    <counter type="CLASS" missed="3" covered="1" />
   </package>
   <package name="Public/JGUser">
     <class name="Public/JGUser/Get-JGUser" sourcefilename="JGUser/Get-JGUser.ps1">
@@ -142,14 +142,14 @@
     </class>
     <class name="Public/JGUser/New-JGUser" sourcefilename="JGUser/New-JGUser.ps1">
       <method name="New-JGUser" desc="()" line="26">
-        <counter type="INSTRUCTION" missed="30" covered="0" />
-        <counter type="LINE" missed="26" covered="0" />
-        <counter type="METHOD" missed="1" covered="0" />
+        <counter type="INSTRUCTION" missed="6" covered="26" />
+        <counter type="LINE" missed="6" covered="22" />
+        <counter type="METHOD" missed="0" covered="1" />
       </method>
-      <counter type="INSTRUCTION" missed="30" covered="0" />
-      <counter type="LINE" missed="26" covered="0" />
-      <counter type="METHOD" missed="1" covered="0" />
-      <counter type="CLASS" missed="1" covered="0" />
+      <counter type="INSTRUCTION" missed="6" covered="26" />
+      <counter type="LINE" missed="6" covered="22" />
+      <counter type="METHOD" missed="0" covered="1" />
+      <counter type="CLASS" missed="0" covered="1" />
     </class>
     <class name="Public/JGUser/Remove-JGUser" sourcefilename="JGUser/Remove-JGUser.ps1">
       <method name="Remove-JGUser" desc="()" line="33">
@@ -264,36 +264,38 @@
       <counter type="CLASS" missed="1" covered="0" />
     </sourcefile>
     <sourcefile name="JGUser/New-JGUser.ps1">
-      <line nr="26" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="27" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="28" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="29" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="30" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="39" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="40" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="44" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="45" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="46" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="48" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="49" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="52" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="53" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="54" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="55" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="56" mi="2" ci="0" mb="0" cb="0" />
-      <line nr="59" mi="3" ci="0" mb="0" cb="0" />
-      <line nr="60" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="61" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="64" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="26" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="27" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="28" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="29" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="30" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="39" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="40" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="44" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="45" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="46" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="48" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="49" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="52" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="53" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="54" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="55" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="56" mi="0" ci="2" mb="0" cb="0" />
+      <line nr="59" mi="0" ci="3" mb="0" cb="0" />
+      <line nr="60" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="61" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="64" mi="0" ci="1" mb="0" cb="0" />
       <line nr="65" mi="1" ci="0" mb="0" cb="0" />
       <line nr="66" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="69" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="69" mi="0" ci="2" mb="0" cb="0" />
       <line nr="73" mi="1" ci="0" mb="0" cb="0" />
       <line nr="74" mi="1" ci="0" mb="0" cb="0" />
-      <counter type="INSTRUCTION" missed="30" covered="0" />
-      <counter type="LINE" missed="26" covered="0" />
-      <counter type="METHOD" missed="1" covered="0" />
-      <counter type="CLASS" missed="1" covered="0" />
+      <line nr="76" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="77" mi="1" ci="0" mb="0" cb="0" />
+      <counter type="INSTRUCTION" missed="6" covered="26" />
+      <counter type="LINE" missed="6" covered="22" />
+      <counter type="METHOD" missed="0" covered="1" />
+      <counter type="CLASS" missed="0" covered="1" />
     </sourcefile>
     <sourcefile name="JGUser/Remove-JGUser.ps1">
       <line nr="33" mi="1" ci="0" mb="0" cb="0" />
@@ -415,13 +417,13 @@
       <counter type="METHOD" missed="1" covered="0" />
       <counter type="CLASS" missed="1" covered="0" />
     </sourcefile>
-    <counter type="INSTRUCTION" missed="211" covered="0" />
-    <counter type="LINE" missed="184" covered="0" />
-    <counter type="METHOD" missed="6" covered="0" />
-    <counter type="CLASS" missed="6" covered="0" />
+    <counter type="INSTRUCTION" missed="187" covered="26" />
+    <counter type="LINE" missed="164" covered="22" />
+    <counter type="METHOD" missed="5" covered="1" />
+    <counter type="CLASS" missed="5" covered="1" />
   </package>
-  <counter type="INSTRUCTION" missed="271" covered="0" />
-  <counter type="LINE" missed="236" covered="0" />
-  <counter type="METHOD" missed="10" covered="0" />
-  <counter type="CLASS" missed="10" covered="0" />
+  <counter type="INSTRUCTION" missed="235" covered="38" />
+  <counter type="LINE" missed="204" covered="34" />
+  <counter type="METHOD" missed="8" covered="2" />
+  <counter type="CLASS" missed="8" covered="2" />
 </report>
