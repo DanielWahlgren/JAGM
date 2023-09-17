@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="0" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2023-09-03" time="19:17:48">
-  <environment clr-version="Unknown" os-version="10.0.22621" user="DanielWahlgren" platform="Microsoft Windows 11 Enterprise|C:\WINDOWS|\Device\Harddisk0\Partition3" nunit-version="2.5.8.0" user-domain="AzureAD" cwd="C:\Users\DanielWahlgren\GIT\JAGM" machine-name="EVT-DANIELW" />
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="0" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2023-09-07" time="11:14:49">
+  <environment clr-version="Unknown" machine-name="EVT-DANIELW" platform="Microsoft Windows 11 Enterprise|C:\WINDOWS|\Device\Harddisk0\Partition3" nunit-version="2.5.8.0" cwd="C:\Users\DanielWahlgren\GIT\JAGM" os-version="10.0.22621" user-domain="AzureAD" user="DanielWahlgren" />
   <culture-info current-culture="sv-SE" current-uiculture="sv-SE" />
-  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="0.0061" asserts="0" description="Pester">
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="0.0953" asserts="0" description="Pester">
     <results />
   </test-suite>
 </test-results>

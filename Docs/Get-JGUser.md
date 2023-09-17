@@ -12,9 +12,22 @@ Gets one or more user from Microsoft Graph
 
 ## SYNTAX
 
+### Default (Default)
 ```
-Get-JGUser [[-ObjectId] <Object>] [[-Property] <String>] [-AdvancedQuery] [[-ExpandProperty] <String>]
- [[-Filter] <String>] [[-Search] <String>] [[-Sort] <String>] [[-Top] <Int32>] [<CommonParameters>]
+Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
+ [-Sort <String>] [-Top <Int32>] [-ExpandProperty <String>] [<CommonParameters>]
+```
+
+### IncludeManager
+```
+Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
+ [-Sort <String>] [-Top <Int32>] [-IncludeManager] [<CommonParameters>]
+```
+
+### IncludeDirectReports
+```
+Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
+ [-Sort <String>] [-Top <Int32>] [-IncludeDirectReports] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,7 +53,7 @@ Parameter Sets: (All)
 Aliases: UserId, Id, userPrincipalName
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
@@ -55,7 +68,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: Id,displayName,jobTitle,mail,officeLocation,userPrincipalName
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -76,21 +89,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ExpandProperty
-Retrieves related resources..
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Filter
 Filters results (rows).
 
@@ -100,7 +98,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -115,7 +113,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -132,7 +130,7 @@ Parameter Sets: (All)
 Aliases: Order, OrderBy
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -147,8 +145,55 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExpandProperty
+Retrieves related resources..
+
+```yaml
+Type: String
+Parameter Sets: Default
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeManager
+Adds the users manager to the query. Returns the Manager with -Property properties.
+To better customise, instead use -Expand 'manager($Select=id,userPrincipalname)'
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: IncludeManager
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeDirectReports
+Adds the users for whom the selected user is a manager to the query. Returns the DirectReports with -Property properties.
+To better customise, instead use -Expand 'directReports($Select=id,userPrincipalname)'
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: IncludeDirectReports
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

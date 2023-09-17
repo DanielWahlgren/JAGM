@@ -23,7 +23,7 @@ function Get-JGUser {
 	param
 	(
 		[Parameter(
-			Mandatory = $true,
+			Mandatory = $false,
 			HelpMessage = 'Enter the desired ObjectId',
 			ValueFromPipeline = $true,
 			ValueFromPipelineByPropertyName = $true
@@ -66,7 +66,9 @@ function Get-JGUser {
 			HelpMessage = 'Orders results. For descending order, append '
 		)]
 		# Orders results.
-		# To sort the results in ascending or descending order, append either asc or desc to the field name, separated by a space; for example, name%20desc. If the sort order is not specified, the default (ascending order) is inferred.
+		# To sort the results in ascending or descending order, append either asc or desc to the field name,
+		# separated by a space; for example, name%20desc. If the sort order is not specified, the default (ascending order)
+		# is inferred.
 		[Alias("Order","OrderBy")]
 		[String]$Sort,
 
@@ -122,19 +124,19 @@ function Get-JGUser {
 		}
 		$QueryString = '?$Select=' + $Property
 		if($PSBoundParameters['ExpandProperty']){
-			$QueryString += '$expand=' + $ExpandProperty
+			$QueryString += '&$expand=' + $ExpandProperty
 		}
 		if($PSBoundParameters['Filter']){
-			$QueryString += '$filter=' + $Filter
+			$QueryString += '&$filter=' + $Filter
 		}
 		if($PSBoundParameters['Search']){
-			$QueryString += '$search=' + $Search
+			$QueryString += '&$search=' + $Search
 		}
 		if($PSBoundParameters['Sort']){
-			$QueryString += '$orderby=' + $Sort
+			$QueryString += '&$orderby=' + $Sort
 		}
 		if($PSBoundParameters['Top']){
-			$QueryString += '$top=' + $Top
+			$QueryString += '&$top=' + $Top
 		}
 		$QueryString += $count
 	}

@@ -24,9 +24,11 @@ LONG DESCRIPTION
 
 Features
     I hope to build this module focusing on these features: * Properly implement
-    basic CMDLet funcionality 	* SupportsShouldProcess 	* Verbose 	* Error
+    basic CMDlet funcionality 	* SupportsShouldProcess 	* Verbose 	* Error
     handling * Microsoft Graph Batching
     * Support for using the pipeline
+    * Keep support for functionality in the correct CMDlet instead of a million
+    mini-CMDlets. Get-JGUser -Expand manager instead of Get-MgUserManager etc.
 
 EXAMPLES
     # Set a configuration for JAGM. This can be placed in $PROFILE to have it loaded the same each time.
@@ -64,6 +66,7 @@ TROUBLESHOOTING NOTE
 
 SEE ALSO
     Microsoft Graph Referense (Beta)
+    Microsoft Graph PowerShell
 
 KEYWORDS
     N/A

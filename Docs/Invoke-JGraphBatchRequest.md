@@ -13,7 +13,7 @@ Helper-function to make batch-requests to Microsoft Graph.
 ## SYNTAX
 
 ```
-Invoke-JGraphBatchRequest [[-BatchObjects] <Object>] [<CommonParameters>]
+Invoke-JGraphBatchRequest [[-BatchObjects] <Object>] [[-Endpoint] <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +44,21 @@ Required: False
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName, ByValue)
+Accept wildcard characters: False
+```
+
+### -Endpoint
+The batch-endpoint to use in the request.
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: V1.0
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

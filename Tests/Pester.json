@@ -1,0 +1,9 @@
+{
+	"Run": {
+		"Path": ".\\Tests\\*.ps1"
+	},
+	"TestResult": {
+		"Enabled": true,
+		"OutputFormat": "NUnitXml"
+	}
+}
