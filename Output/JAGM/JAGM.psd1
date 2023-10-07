@@ -12,7 +12,7 @@
 RootModule = 'JAGM.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.10.9'
+ModuleVersion = '0.10.10'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Core'
