@@ -34,12 +34,14 @@ function Invoke-JGraphBatchRequest {
 	)
 
 	process {
-		$batchResult =@()
+		$batchResult = [System.Collections.Concurrent.ConcurrentBag[System.Object]]::new()
 		#Splitting the objects into batches of 20
 		$script:counter = 0
 		$Batches = $BatchObjects | Group-Object -Property { [math]::Floor($script:counter++ / 20) }
 
-		foreach($batch in $Batches){
+		$Batches | Foreach-Object -ThrottleLimit 5 -Parallel {
+			$batch = $PSItem
+			$collection = $using:batchResult
 			[int]$requestID = 1
 			foreach($request in $batch.Group){
 				Add-Member -InputObject $request -Name 'id' -Value $requestID -MemberType NoteProperty
@@ -50,26 +52,26 @@ function Invoke-JGraphBatchRequest {
 			}
 			$parameters = @{
 				Method	= "POST"
-				Uri 	= $Endpoint + '/$batch'
+				Uri 	= $using:Endpoint + '/$batch'
 				Body	= $allBatchRequests | ConvertTo-Json -Depth 10 -Compress
 				Headers = $headers
 			}
 			Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
 			$result = Invoke-MgGraphRequest @parameters
-			$batchResult += foreach($item in $result.responses){
+			foreach($item in $result.responses){
 				if( -not [String]::IsNullOrEmpty($item.body) -and $item.body.ContainsKey('value')){
 					foreach($o in $item.body.value){
-						[PSCustomObject]$o
+						$collection.Add([PSCustomObject]$o)
 					}
 				} else {
 					if([String]::IsNullOrEmpty($item.body.error)){
-						$item.body | Select-Object -ExcludeProperty '@odata.context'
+						$collection.Add(($item.body | Select-Object -ExcludeProperty '@odata.context'))
 					} else {
 						Write-Warning $item.body.error['message']
 					}
 				}
 			}
 		}
-		$batchResult
+		[PSCustomObject[]]$batchResult
 	}
 }

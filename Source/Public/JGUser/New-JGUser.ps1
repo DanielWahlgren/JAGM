@@ -16,7 +16,7 @@ function New-JGUser {
 	.OUTPUTS
 		[System.Collections.Hashtable].
 	#>
-    [alias("Add-JGuser")]
+	[alias("Add-JGuser")]
 	[CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
 	param
 	(
@@ -29,8 +29,7 @@ function New-JGUser {
 			$PSItem.PSObject.Properties.Name -contains ('passwordProfile') -and
 			$PSItem.PSObject.Properties.Name -contains ('userPrincipalName')
 		},
-		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'accountEnabled','displayName','passwordProfile','userPrincipalName'"
-        )]
+		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'accountEnabled','displayName','passwordProfile','userPrincipalName'")]
 		[Alias("Object")]
 		$UserObject
 	)
@@ -46,7 +45,7 @@ function New-JGUser {
 				New-JGraphBatchObject -Method POST -Url '/users' -Body $request
 			}
 			if($PSCmdlet.ShouldProcess($BatchObjects)){
-				Invoke-JGraphBatchRequest -BatchObjects $BatchObjects
+				Invoke-JGraphBatchRequest -BatchObjects $BatchObjects -Verbose:$Verbose
 			}
 		} else {
 			$parameters = @{

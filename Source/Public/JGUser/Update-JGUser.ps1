@@ -25,8 +25,7 @@ function Update-JGUser {
 			$PSItem.GetType().Name -match 'Object' -and
 			$PSItem.PSObject.Properties.Name -contains ('Id')
 		},
-		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'Id'"
-        )]
+		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'Id'")]
 		[Alias("UserObject")]
 		$Object
 	)

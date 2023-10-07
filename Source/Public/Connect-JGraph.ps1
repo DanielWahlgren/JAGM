@@ -59,7 +59,7 @@ function Connect-JGraph {
 	}
 
 	process {
-		Connect-MgGraph @Parameters | Out-Null
+		Connect-MgGraph @Parameters -Verbose:$Verbose | Out-Null
 	}
 
 	end {}

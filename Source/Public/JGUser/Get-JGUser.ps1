@@ -89,31 +89,109 @@ function Get-JGUser {
 
 		[Parameter(
 			Mandatory = $false,
-			ParameterSetName = 'IncludeManager',
-			HelpMessage = 'Adds the users manager to the query.'
+			ParameterSetName = 'AppRoleAssignments',
+			HelpMessage = 'Adds the app roles a user has been granted for an application.'
 		)]
-		# Adds the users manager to the query. Returns the Manager with -Property properties.
-		# To better customise, instead use -Expand 'manager($Select=id,userPrincipalname)'
-		[Switch]$IncludeManager,
+		# Represents the app roles a user has been granted for an application.
+		# To better customise, instead use -Expand 'appRoleAssignments($Select=id)'
+		[Switch]$AppRoleAssignments,
 
 		[Parameter(
 			Mandatory = $false,
-			ParameterSetName = 'IncludeDirectReports',
+			ParameterSetName = 'DirectReports',
 			HelpMessage = 'Adds the users for whom the selected user is a manager to the query.'
 		)]
 		# Adds the users for whom the selected user is a manager to the query. Returns the DirectReports with -Property properties.
-		# To better customise, instead use -Expand 'directReports($Select=id,userPrincipalname)'
-		[Switch]$IncludeDirectReports
+		# To better customise, instead use -Expand 'directReports($Select=id)'
+		[Switch]$DirectReports,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'Extensions',
+			HelpMessage = 'Adds the collection of open extensions defined for the user.'
+		)]
+		# The collection of open extensions defined for the user.
+		# To better customise, instead use -Expand 'extensions($Select=id)'
+		[Switch]$Extensions,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'Manager',
+			HelpMessage = 'Adds the users manager to the query.'
+		)]
+		# Adds the users manager to the query. Returns the Manager with -Property properties.
+		# To better customise, instead use -Expand 'manager($Select=id)'
+		[Switch]$Manager,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'MemberOf',
+			HelpMessage = 'Adds the groups and directory roles that the user is a member of'
+		)]
+		# Adds the groups and directory roles that the user is a member of.
+		# To better customise, instead use -Expand 'memberOf($Select=id)'
+		[Switch]$MemberOf,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'OwnedDevices',
+			HelpMessage = 'Adds the devices that are owned by the user'
+		)]
+		# Adds the devices that are owned by the user.
+		# To better customise, instead use -Expand 'ownedDevices($Select=id)'
+		[Switch]$OwnedDevices,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'OwnedObjects',
+			HelpMessage = 'Adds the directory objects that are owned by the user.'
+		)]
+		# Adds the directory objects that are owned by the user.
+		# To better customise, instead use -Expand 'ownedObjects($Select=id)'
+		[Switch]$OwnedObjects,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'RegisteredDevices',
+			HelpMessage = 'Adds the devices that are registered for the user.'
+		)]
+		# Adds the devices that are registered for the user.
+		# To better customise, instead use -Expand 'registeredDevices($Select=id)'
+		[Switch]$RegisteredDevices
 	)
 
 	begin {
-		if($IncludeManager){
+		if($AppRoleAssignments){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'appRoleAssignments'
+		}
+		if($DirectReports){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'directReports($Select=' + $Property + ')'
+		}
+		if($Extensions){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'extensions($Select=Id)'
+		}
+		if($Manager){
 			$PSBoundParameters['ExpandProperty'] = $true
 			$ExpandProperty = 'manager($Select=' + $Property + ')'
 		}
-		if($IncludeDirectReports){
+		if($MemberOf){
 			$PSBoundParameters['ExpandProperty'] = $true
-			$ExpandProperty = 'directReports($Select=' + $Property + ')'
+			$ExpandProperty = 'memberOf($Select=Id)'
+		}
+		if($OwnedDevices){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'ownedDevices($Select=Id)'
+		}
+		if($OwnedObjects){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'ownedObjects($Select=Id)'
+		}
+		if($RegisteredDevices){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'registeredDevices($Select=)'
 		}
 
 		#Construct the basics for the query based on supplied parameters
