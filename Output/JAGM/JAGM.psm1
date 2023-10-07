@@ -61,7 +61,7 @@ function Connect-JGraph {
 	}
 
 	process {
-		Connect-MgGraph @Parameters | Out-Null
+		Connect-MgGraph @Parameters -Verbose:$Verbose | Out-Null
 	}
 
 	end {}
@@ -123,6 +123,8 @@ function Invoke-JGraphBatchRequest {
 	.OUTPUTS
 		None.
 	#>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', 'Endpoint', Justification='$Endpoint is used as a remote variable in the Foreach-Object -Parallel scriptblock')]
+	[OutputType([System.Management.Automation.PSObject[]])]
 	[CmdletBinding()]
 	param
 	(
@@ -138,12 +140,14 @@ function Invoke-JGraphBatchRequest {
 	)
 
 	process {
-		$batchResult =@()
+		$batchResult = [System.Collections.Concurrent.ConcurrentBag[System.Object]]::new()
 		#Splitting the objects into batches of 20
 		$script:counter = 0
 		$Batches = $BatchObjects | Group-Object -Property { [math]::Floor($script:counter++ / 20) }
 
-		foreach($batch in $Batches){
+		$Batches | Foreach-Object -ThrottleLimit 5 -Parallel {
+			$batch = $PSItem
+			$collection = $using:batchResult
 			[int]$requestID = 1
 			foreach($request in $batch.Group){
 				Add-Member -InputObject $request -Name 'id' -Value $requestID -MemberType NoteProperty
@@ -154,27 +158,27 @@ function Invoke-JGraphBatchRequest {
 			}
 			$parameters = @{
 				Method	= "POST"
-				Uri 	= $Endpoint + '/$batch'
+				Uri 	= $using:Endpoint + '/$batch'
 				Body	= $allBatchRequests | ConvertTo-Json -Depth 10 -Compress
 				Headers = $headers
 			}
 			Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
 			$result = Invoke-MgGraphRequest @parameters
-			$batchResult += foreach($item in $result.responses){
+			foreach($item in $result.responses){
 				if( -not [String]::IsNullOrEmpty($item.body) -and $item.body.ContainsKey('value')){
 					foreach($o in $item.body.value){
-						[PSCustomObject]$o
+						$collection.Add([PSCustomObject]$o)
 					}
 				} else {
 					if([String]::IsNullOrEmpty($item.body.error)){
-						$item.body | Select-Object -ExcludeProperty '@odata.context'
+						$collection.Add(($item.body | Select-Object -ExcludeProperty '@odata.context'))
 					} else {
 						Write-Warning $item.body.error['message']
 					}
 				}
 			}
 		}
-		$batchResult
+		[PSCustomObject[]]$batchResult
 	}
 }
 Export-ModuleMember -Function Invoke-JGraphBatchRequest
@@ -341,31 +345,109 @@ function Get-JGUser {
 
 		[Parameter(
 			Mandatory = $false,
-			ParameterSetName = 'IncludeManager',
-			HelpMessage = 'Adds the users manager to the query.'
+			ParameterSetName = 'AppRoleAssignments',
+			HelpMessage = 'Adds the app roles a user has been granted for an application.'
 		)]
-		# Adds the users manager to the query. Returns the Manager with -Property properties.
-		# To better customise, instead use -Expand 'manager($Select=id,userPrincipalname)'
-		[Switch]$IncludeManager,
+		# Represents the app roles a user has been granted for an application.
+		# To better customise, instead use -Expand 'appRoleAssignments($Select=id)'
+		[Switch]$AppRoleAssignments,
 
 		[Parameter(
 			Mandatory = $false,
-			ParameterSetName = 'IncludeDirectReports',
+			ParameterSetName = 'DirectReports',
 			HelpMessage = 'Adds the users for whom the selected user is a manager to the query.'
 		)]
 		# Adds the users for whom the selected user is a manager to the query. Returns the DirectReports with -Property properties.
-		# To better customise, instead use -Expand 'directReports($Select=id,userPrincipalname)'
-		[Switch]$IncludeDirectReports
+		# To better customise, instead use -Expand 'directReports($Select=id)'
+		[Switch]$DirectReports,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'Extensions',
+			HelpMessage = 'Adds the collection of open extensions defined for the user.'
+		)]
+		# The collection of open extensions defined for the user.
+		# To better customise, instead use -Expand 'extensions($Select=id)'
+		[Switch]$Extensions,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'Manager',
+			HelpMessage = 'Adds the users manager to the query.'
+		)]
+		# Adds the users manager to the query. Returns the Manager with -Property properties.
+		# To better customise, instead use -Expand 'manager($Select=id)'
+		[Switch]$Manager,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'MemberOf',
+			HelpMessage = 'Adds the groups and directory roles that the user is a member of'
+		)]
+		# Adds the groups and directory roles that the user is a member of.
+		# To better customise, instead use -Expand 'memberOf($Select=id)'
+		[Switch]$MemberOf,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'OwnedDevices',
+			HelpMessage = 'Adds the devices that are owned by the user'
+		)]
+		# Adds the devices that are owned by the user.
+		# To better customise, instead use -Expand 'ownedDevices($Select=id)'
+		[Switch]$OwnedDevices,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'OwnedObjects',
+			HelpMessage = 'Adds the directory objects that are owned by the user.'
+		)]
+		# Adds the directory objects that are owned by the user.
+		# To better customise, instead use -Expand 'ownedObjects($Select=id)'
+		[Switch]$OwnedObjects,
+
+		[Parameter(
+			Mandatory = $false,
+			ParameterSetName = 'RegisteredDevices',
+			HelpMessage = 'Adds the devices that are registered for the user.'
+		)]
+		# Adds the devices that are registered for the user.
+		# To better customise, instead use -Expand 'registeredDevices($Select=id)'
+		[Switch]$RegisteredDevices
 	)
 
 	begin {
-		if($IncludeManager){
+		if($AppRoleAssignments){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'appRoleAssignments'
+		}
+		if($DirectReports){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'directReports($Select=' + $Property + ')'
+		}
+		if($Extensions){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'extensions($Select=Id)'
+		}
+		if($Manager){
 			$PSBoundParameters['ExpandProperty'] = $true
 			$ExpandProperty = 'manager($Select=' + $Property + ')'
 		}
-		if($IncludeDirectReports){
+		if($MemberOf){
 			$PSBoundParameters['ExpandProperty'] = $true
-			$ExpandProperty = 'directReports($Select=' + $Property + ')'
+			$ExpandProperty = 'memberOf($Select=Id)'
+		}
+		if($OwnedDevices){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'ownedDevices($Select=Id)'
+		}
+		if($OwnedObjects){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'ownedObjects($Select=Id)'
+		}
+		if($RegisteredDevices){
+			$PSBoundParameters['ExpandProperty'] = $true
+			$ExpandProperty = 'registeredDevices($Select=)'
 		}
 
 		#Construct the basics for the query based on supplied parameters
@@ -480,7 +562,7 @@ function New-JGUser {
 	.OUTPUTS
 		[System.Collections.Hashtable].
 	#>
-    [alias("Add-JGuser")]
+	[alias("Add-JGuser")]
 	[CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
 	param
 	(
@@ -493,10 +575,9 @@ function New-JGUser {
 			$PSItem.PSObject.Properties.Name -contains ('passwordProfile') -and
 			$PSItem.PSObject.Properties.Name -contains ('userPrincipalName')
 		},
-		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'accountEnabled','displayName','passwordProfile','userPrincipalName'"
-        )]
-		[Alias("UserObject")]
-		$Object
+		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'accountEnabled','displayName','passwordProfile','userPrincipalName'")]
+		[Alias("Object")]
+		$UserObject
 	)
 
 	begin {
@@ -505,23 +586,23 @@ function New-JGUser {
 	}
 
 	process {
-		if($Object.Count -gt 1){
-			$BatchObjects = foreach ($request in $Object) {
+		if($UserObject.Count -gt 1){
+			$BatchObjects = foreach ($request in $UserObject) {
 				New-JGraphBatchObject -Method POST -Url '/users' -Body $request
 			}
 			if($PSCmdlet.ShouldProcess($BatchObjects)){
-				Invoke-JGraphBatchRequest -BatchObjects $BatchObjects
+				Invoke-JGraphBatchRequest -BatchObjects $BatchObjects -Verbose:$Verbose
 			}
 		} else {
 			$parameters = @{
 				Method	= "POST"
 				Uri 	= '/v1.0/users'
 				Headers = $headers
-				Body	= $Object | ConvertTo-Json
+				Body	= $UserObject | ConvertTo-Json
 			}
 			try{
 				Write-Verbose "Invoke-MgGraphRequest @parameters $($parameters | ConvertTo-Json -Depth 5 -Compress)"
-				if($PSCmdlet.ShouldProcess($Object)){
+				if($PSCmdlet.ShouldProcess($UserObject.displayName)){
 					$result = Invoke-MgGraphRequest @parameters
 				}
 				#Invoke-MgGraphRequest -Method POST -Uri '/v1.0/users' -Headers $headers -Body $Object
@@ -534,8 +615,12 @@ function New-JGUser {
 				}
 			}
 			catch {
-				$Err = $Error[0]
-				Write-Warning $Err.Exception.Message
+				if([String]::IsNullOrEmpty($Error[0])){
+					Write-Error "Unknown error"
+				} else {
+					$Err = $Error[0]
+					Write-Warning $Err.Exception.Message
+				}
 			}
 		}
 	}
@@ -808,8 +893,7 @@ function Update-JGUser {
 			$PSItem.GetType().Name -match 'Object' -and
 			$PSItem.PSObject.Properties.Name -contains ('Id')
 		},
-		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'Id'"
-        )]
+		ErrorMessage = "Supplied Object is invalid. Please supply a PSCustomObject containing minimum: 'Id'")]
 		[Alias("UserObject")]
 		$Object
 	)

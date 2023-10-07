@@ -147,7 +147,7 @@ task Test {
 
 task DebugBuild -if ($Configuration -eq "debug") {
 	try {
-		$Script:ModuleName = (Test-ModuleManifest -Path (Join-Path '.' 'Sources' '*.psd1')).Name
+		$Script:ModuleName = (Test-ModuleManifest -Path (Join-Path '.' 'Source' '*.psd1')).Name
 	} catch {
 		$Script:ModuleName = Split-Path -Path (Get-Location) -Leaf
 	}
@@ -229,7 +229,7 @@ task DebugBuild -if ($Configuration -eq "debug") {
 
 task Build -if($Configuration -eq "Release") {
 	try {
-		$Script:ModuleName = (Test-ModuleManifest -Path (Join-Path '.' 'Sources' '*.psd1')).Name
+		$Script:ModuleName = (Test-ModuleManifest -Path (Join-Path '.' 'Source' '*.psd1')).Name
 	} catch {
 		$Script:ModuleName = Split-Path -Path (Get-Location) -Leaf
 	}
@@ -379,4 +379,4 @@ task Publish -if($Configuration -eq "Release") {
 }
 
 # Default task
-task . Init, Test, DebugBuild
+task . Init, Test, DebugBuild, Build

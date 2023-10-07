@@ -13,7 +13,7 @@ Helper-function to create a user in Microsoft Graph.
 ## SYNTAX
 
 ```
-New-JGUser [-Object] <Object> [-WhatIf] [-Confirm] [<CommonParameters>]
+New-JGUser [-UserObject] <Object> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,13 +29,13 @@ Creates a user
 
 ## PARAMETERS
 
-### -Object
+### -UserObject
 The Object to create in Microsoft Graph
 
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: UserObject
+Aliases: Object
 
 Required: True
 Position: 1

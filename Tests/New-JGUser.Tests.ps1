@@ -55,6 +55,7 @@ BeforeAll {
 		userPrincipalName = 'JGUser04@contoso.com'
 	}
 	$users = @($addperson1,$addperson2,$addperson3,$addperson4)
+	$users = $users
 }
 Describe 'New-JGUser -UserObject:$Object' {
 	Context " Minimum Object supplied" {

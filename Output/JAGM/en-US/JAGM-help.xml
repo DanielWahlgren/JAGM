@@ -356,9 +356,9 @@ Disconnects the current MgGraph-connection.</dev:code>
           <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>IncludeManager</maml:name>
+          <maml:name>AppRoleAssignments</maml:name>
           <maml:description>
-            <maml:para>Adds the users manager to the query. Returns the Manager with -Property properties. To better customise, instead use -Expand 'manager($Select=id,userPrincipalname)'</maml:para>
+            <maml:para>Represents the app roles a user has been granted for an application. To better customise, instead use -Expand 'appRoleAssignments($Select=id)'</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -453,9 +453,591 @@ Disconnects the current MgGraph-connection.</dev:code>
           <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>IncludeDirectReports</maml:name>
+          <maml:name>DirectReports</maml:name>
           <maml:description>
-            <maml:para>Adds the users for whom the selected user is a manager to the query. Returns the DirectReports with -Property properties. To better customise, instead use -Expand 'directReports($Select=id,userPrincipalname)'</maml:para>
+            <maml:para>Adds the users for whom the selected user is a manager to the query. Returns the DirectReports with -Property properties. To better customise, instead use -Expand 'directReports($Select=id)'</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-JGUser</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="UserId, Id, userPrincipalName">
+          <maml:name>ObjectId</maml:name>
+          <maml:description>
+            <maml:para>The ObjectId of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Property</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Id,displayName,jobTitle,mail,officeLocation,userPrincipalName</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>AdvancedQuery</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Filter</maml:name>
+          <maml:description>
+            <maml:para>Filters results (rows).</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Search</maml:name>
+          <maml:description>
+            <maml:para>Returns results based on search criteria.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Order, OrderBy">
+          <maml:name>Sort</maml:name>
+          <maml:description>
+            <maml:para>Orders results. To sort the results in ascending or descending order, append either asc or desc to the field name, separated by a space; for example, name%20desc. If the sort order is not specified, the default (ascending order) is inferred.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Top</maml:name>
+          <maml:description>
+            <maml:para>Sets the page size of results.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Extensions</maml:name>
+          <maml:description>
+            <maml:para>The collection of open extensions defined for the user. To better customise, instead use -Expand 'extensions($Select=id)'</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-JGUser</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="UserId, Id, userPrincipalName">
+          <maml:name>ObjectId</maml:name>
+          <maml:description>
+            <maml:para>The ObjectId of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Property</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Id,displayName,jobTitle,mail,officeLocation,userPrincipalName</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>AdvancedQuery</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Filter</maml:name>
+          <maml:description>
+            <maml:para>Filters results (rows).</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Search</maml:name>
+          <maml:description>
+            <maml:para>Returns results based on search criteria.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Order, OrderBy">
+          <maml:name>Sort</maml:name>
+          <maml:description>
+            <maml:para>Orders results. To sort the results in ascending or descending order, append either asc or desc to the field name, separated by a space; for example, name%20desc. If the sort order is not specified, the default (ascending order) is inferred.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Top</maml:name>
+          <maml:description>
+            <maml:para>Sets the page size of results.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Manager</maml:name>
+          <maml:description>
+            <maml:para>Adds the users manager to the query. Returns the Manager with -Property properties. To better customise, instead use -Expand 'manager($Select=id)'</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-JGUser</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="UserId, Id, userPrincipalName">
+          <maml:name>ObjectId</maml:name>
+          <maml:description>
+            <maml:para>The ObjectId of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Property</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Id,displayName,jobTitle,mail,officeLocation,userPrincipalName</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>AdvancedQuery</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Filter</maml:name>
+          <maml:description>
+            <maml:para>Filters results (rows).</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Search</maml:name>
+          <maml:description>
+            <maml:para>Returns results based on search criteria.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Order, OrderBy">
+          <maml:name>Sort</maml:name>
+          <maml:description>
+            <maml:para>Orders results. To sort the results in ascending or descending order, append either asc or desc to the field name, separated by a space; for example, name%20desc. If the sort order is not specified, the default (ascending order) is inferred.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Top</maml:name>
+          <maml:description>
+            <maml:para>Sets the page size of results.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>MemberOf</maml:name>
+          <maml:description>
+            <maml:para>Adds the groups and directory roles that the user is a member of. To better customise, instead use -Expand 'memberOf($Select=id)'</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-JGUser</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="UserId, Id, userPrincipalName">
+          <maml:name>ObjectId</maml:name>
+          <maml:description>
+            <maml:para>The ObjectId of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Property</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Id,displayName,jobTitle,mail,officeLocation,userPrincipalName</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>AdvancedQuery</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Filter</maml:name>
+          <maml:description>
+            <maml:para>Filters results (rows).</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Search</maml:name>
+          <maml:description>
+            <maml:para>Returns results based on search criteria.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Order, OrderBy">
+          <maml:name>Sort</maml:name>
+          <maml:description>
+            <maml:para>Orders results. To sort the results in ascending or descending order, append either asc or desc to the field name, separated by a space; for example, name%20desc. If the sort order is not specified, the default (ascending order) is inferred.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Top</maml:name>
+          <maml:description>
+            <maml:para>Sets the page size of results.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>OwnedDevices</maml:name>
+          <maml:description>
+            <maml:para>Adds the devices that are owned by the user. To better customise, instead use -Expand 'ownedDevices($Select=id)'</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-JGUser</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="UserId, Id, userPrincipalName">
+          <maml:name>ObjectId</maml:name>
+          <maml:description>
+            <maml:para>The ObjectId of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Property</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Id,displayName,jobTitle,mail,officeLocation,userPrincipalName</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>AdvancedQuery</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Filter</maml:name>
+          <maml:description>
+            <maml:para>Filters results (rows).</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Search</maml:name>
+          <maml:description>
+            <maml:para>Returns results based on search criteria.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Order, OrderBy">
+          <maml:name>Sort</maml:name>
+          <maml:description>
+            <maml:para>Orders results. To sort the results in ascending or descending order, append either asc or desc to the field name, separated by a space; for example, name%20desc. If the sort order is not specified, the default (ascending order) is inferred.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Top</maml:name>
+          <maml:description>
+            <maml:para>Sets the page size of results.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>OwnedObjects</maml:name>
+          <maml:description>
+            <maml:para>Adds the directory objects that are owned by the user. To better customise, instead use -Expand 'ownedObjects($Select=id)'</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-JGUser</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="named" aliases="UserId, Id, userPrincipalName">
+          <maml:name>ObjectId</maml:name>
+          <maml:description>
+            <maml:para>The ObjectId of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Property</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Id,displayName,jobTitle,mail,officeLocation,userPrincipalName</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>AdvancedQuery</maml:name>
+          <maml:description>
+            <maml:para>The properties of the user to get from Graph.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Filter</maml:name>
+          <maml:description>
+            <maml:para>Filters results (rows).</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Search</maml:name>
+          <maml:description>
+            <maml:para>Returns results based on search criteria.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Order, OrderBy">
+          <maml:name>Sort</maml:name>
+          <maml:description>
+            <maml:para>Orders results. To sort the results in ascending or descending order, append either asc or desc to the field name, separated by a space; for example, name%20desc. If the sort order is not specified, the default (ascending order) is inferred.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Top</maml:name>
+          <maml:description>
+            <maml:para>Sets the page size of results.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>RegisteredDevices</maml:name>
+          <maml:description>
+            <maml:para>Adds the devices that are registered for the user. To better customise, instead use -Expand 'registeredDevices($Select=id)'</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -563,9 +1145,9 @@ Disconnects the current MgGraph-connection.</dev:code>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>IncludeManager</maml:name>
+        <maml:name>AppRoleAssignments</maml:name>
         <maml:description>
-          <maml:para>Adds the users manager to the query. Returns the Manager with -Property properties. To better customise, instead use -Expand 'manager($Select=id,userPrincipalname)'</maml:para>
+          <maml:para>Represents the app roles a user has been granted for an application. To better customise, instead use -Expand 'appRoleAssignments($Select=id)'</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -575,9 +1157,81 @@ Disconnects the current MgGraph-connection.</dev:code>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>IncludeDirectReports</maml:name>
+        <maml:name>DirectReports</maml:name>
         <maml:description>
-          <maml:para>Adds the users for whom the selected user is a manager to the query. Returns the DirectReports with -Property properties. To better customise, instead use -Expand 'directReports($Select=id,userPrincipalname)'</maml:para>
+          <maml:para>Adds the users for whom the selected user is a manager to the query. Returns the DirectReports with -Property properties. To better customise, instead use -Expand 'directReports($Select=id)'</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Extensions</maml:name>
+        <maml:description>
+          <maml:para>The collection of open extensions defined for the user. To better customise, instead use -Expand 'extensions($Select=id)'</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Manager</maml:name>
+        <maml:description>
+          <maml:para>Adds the users manager to the query. Returns the Manager with -Property properties. To better customise, instead use -Expand 'manager($Select=id)'</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>MemberOf</maml:name>
+        <maml:description>
+          <maml:para>Adds the groups and directory roles that the user is a member of. To better customise, instead use -Expand 'memberOf($Select=id)'</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>OwnedDevices</maml:name>
+        <maml:description>
+          <maml:para>Adds the devices that are owned by the user. To better customise, instead use -Expand 'ownedDevices($Select=id)'</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>OwnedObjects</maml:name>
+        <maml:description>
+          <maml:para>Adds the directory objects that are owned by the user. To better customise, instead use -Expand 'ownedObjects($Select=id)'</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>RegisteredDevices</maml:name>
+        <maml:description>
+          <maml:para>Adds the devices that are registered for the user. To better customise, instead use -Expand 'registeredDevices($Select=id)'</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -908,8 +1562,8 @@ Makes a new Batch-object for use in Batch-requests</dev:code>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>New-JGUser</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="UserObject">
-          <maml:name>Object</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Object">
+          <maml:name>UserObject</maml:name>
           <maml:description>
             <maml:para>The Object to create in Microsoft Graph</maml:para>
           </maml:description>
@@ -945,8 +1599,8 @@ Makes a new Batch-object for use in Batch-requests</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="UserObject">
-        <maml:name>Object</maml:name>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Object">
+        <maml:name>UserObject</maml:name>
         <maml:description>
           <maml:para>The Object to create in Microsoft Graph</maml:para>
         </maml:description>

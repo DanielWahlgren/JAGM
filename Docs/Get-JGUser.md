@@ -18,16 +18,52 @@ Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <
  [-Sort <String>] [-Top <Int32>] [-ExpandProperty <String>] [<CommonParameters>]
 ```
 
-### IncludeManager
+### AppRoleAssignments
 ```
 Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
- [-Sort <String>] [-Top <Int32>] [-IncludeManager] [<CommonParameters>]
+ [-Sort <String>] [-Top <Int32>] [-AppRoleAssignments] [<CommonParameters>]
 ```
 
-### IncludeDirectReports
+### DirectReports
 ```
 Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
- [-Sort <String>] [-Top <Int32>] [-IncludeDirectReports] [<CommonParameters>]
+ [-Sort <String>] [-Top <Int32>] [-DirectReports] [<CommonParameters>]
+```
+
+### Extensions
+```
+Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
+ [-Sort <String>] [-Top <Int32>] [-Extensions] [<CommonParameters>]
+```
+
+### Manager
+```
+Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
+ [-Sort <String>] [-Top <Int32>] [-Manager] [<CommonParameters>]
+```
+
+### MemberOf
+```
+Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
+ [-Sort <String>] [-Top <Int32>] [-MemberOf] [<CommonParameters>]
+```
+
+### OwnedDevices
+```
+Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
+ [-Sort <String>] [-Top <Int32>] [-OwnedDevices] [<CommonParameters>]
+```
+
+### OwnedObjects
+```
+Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
+ [-Sort <String>] [-Top <Int32>] [-OwnedObjects] [<CommonParameters>]
+```
+
+### RegisteredDevices
+```
+Get-JGUser [-ObjectId <Object>] [-Property <String>] [-AdvancedQuery] [-Filter <String>] [-Search <String>]
+ [-Sort <String>] [-Top <Int32>] [-RegisteredDevices] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -166,13 +202,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IncludeManager
-Adds the users manager to the query. Returns the Manager with -Property properties.
-To better customise, instead use -Expand 'manager($Select=id,userPrincipalname)'
+### -AppRoleAssignments
+Represents the app roles a user has been granted for an application.
+To better customise, instead use -Expand 'appRoleAssignments($Select=id)'
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: IncludeManager
+Parameter Sets: AppRoleAssignments
 Aliases:
 
 Required: False
@@ -182,13 +218,109 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IncludeDirectReports
+### -DirectReports
 Adds the users for whom the selected user is a manager to the query. Returns the DirectReports with -Property properties.
-To better customise, instead use -Expand 'directReports($Select=id,userPrincipalname)'
+To better customise, instead use -Expand 'directReports($Select=id)'
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: IncludeDirectReports
+Parameter Sets: DirectReports
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Extensions
+The collection of open extensions defined for the user.
+To better customise, instead use -Expand 'extensions($Select=id)'
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Extensions
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Manager
+Adds the users manager to the query. Returns the Manager with -Property properties.
+To better customise, instead use -Expand 'manager($Select=id)'
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Manager
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MemberOf
+Adds the groups and directory roles that the user is a member of.
+To better customise, instead use -Expand 'memberOf($Select=id)'
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: MemberOf
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OwnedDevices
+Adds the devices that are owned by the user.
+To better customise, instead use -Expand 'ownedDevices($Select=id)'
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: OwnedDevices
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OwnedObjects
+Adds the directory objects that are owned by the user.
+To better customise, instead use -Expand 'ownedObjects($Select=id)'
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: OwnedObjects
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RegisteredDevices
+Adds the devices that are registered for the user.
+To better customise, instead use -Expand 'registeredDevices($Select=id)'
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: RegisteredDevices
 Aliases:
 
 Required: False
