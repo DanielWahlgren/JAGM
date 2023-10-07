@@ -19,6 +19,8 @@ function Invoke-JGraphBatchRequest {
 	.OUTPUTS
 		None.
 	#>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', 'Endpoint', Justification='$Endpoint is used as a remote variable in the Foreach-Object -Parallel scriptblock')]
+	[OutputType([System.Management.Automation.PSObject[]])]
 	[CmdletBinding()]
 	param
 	(
