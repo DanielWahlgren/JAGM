@@ -12,7 +12,7 @@
 RootModule = 'JAGM.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.10.10'
+ModuleVersion = '0.10.11'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Core'
@@ -51,7 +51,7 @@ PowerShellVersion = '7.3'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @(@{ModuleName = 'Microsoft.Graph.Authentication'; ModuleVersion = '2.0.0'; })
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
